@@ -46,7 +46,6 @@ COPTS = select({
     ":msvc": MSVC_COPTS,
     "//conditions:default": [
         "-DHAVE_ZLIB",
-        "-Wmissing-field-initializers",
         "-Woverloaded-virtual",
         "-Wno-sign-compare",
     ],
@@ -147,6 +146,7 @@ load(
     "adapt_proto_library",
     "cc_proto_library",
     "internal_copied_filegroup",
+    "internal_gen_kt_protos",
     "internal_gen_well_known_protos_java",
     "internal_protobuf_py_tests",
     "py_proto_library",
@@ -159,9 +159,9 @@ cc_library(
         "src/google/protobuf/any_lite.cc",
         "src/google/protobuf/arena.cc",
         "src/google/protobuf/arenastring.cc",
+        "src/google/protobuf/arenaz_sampler.cc",
         "src/google/protobuf/extension_set.cc",
         "src/google/protobuf/generated_enum_util.cc",
-        "src/google/protobuf/generated_message_table_driven_lite.cc",
         "src/google/protobuf/generated_message_tctable_lite.cc",
         "src/google/protobuf/generated_message_util.cc",
         "src/google/protobuf/implicit_weak_message.cc",
@@ -223,7 +223,6 @@ cc_library(
         "src/google/protobuf/field_mask.pb.cc",
         "src/google/protobuf/generated_message_bases.cc",
         "src/google/protobuf/generated_message_reflection.cc",
-        "src/google/protobuf/generated_message_table_driven.cc",
         "src/google/protobuf/generated_message_tctable_full.cc",
         "src/google/protobuf/io/gzip_stream.cc",
         "src/google/protobuf/io/printer.cc",
@@ -421,21 +420,21 @@ cc_library(
         # AUTOGEN(protoc_lib_srcs)
         "src/google/protobuf/compiler/code_generator.cc",
         "src/google/protobuf/compiler/command_line_interface.cc",
-        "src/google/protobuf/compiler/cpp/cpp_enum.cc",
-        "src/google/protobuf/compiler/cpp/cpp_enum_field.cc",
-        "src/google/protobuf/compiler/cpp/cpp_extension.cc",
-        "src/google/protobuf/compiler/cpp/cpp_field.cc",
-        "src/google/protobuf/compiler/cpp/cpp_file.cc",
-        "src/google/protobuf/compiler/cpp/cpp_generator.cc",
-        "src/google/protobuf/compiler/cpp/cpp_helpers.cc",
-        "src/google/protobuf/compiler/cpp/cpp_map_field.cc",
-        "src/google/protobuf/compiler/cpp/cpp_message.cc",
-        "src/google/protobuf/compiler/cpp/cpp_message_field.cc",
-        "src/google/protobuf/compiler/cpp/cpp_padding_optimizer.cc",
-        "src/google/protobuf/compiler/cpp/cpp_parse_function_generator.cc",
-        "src/google/protobuf/compiler/cpp/cpp_primitive_field.cc",
-        "src/google/protobuf/compiler/cpp/cpp_service.cc",
-        "src/google/protobuf/compiler/cpp/cpp_string_field.cc",
+        "src/google/protobuf/compiler/cpp/enum.cc",
+        "src/google/protobuf/compiler/cpp/enum_field.cc",
+        "src/google/protobuf/compiler/cpp/extension.cc",
+        "src/google/protobuf/compiler/cpp/field.cc",
+        "src/google/protobuf/compiler/cpp/file.cc",
+        "src/google/protobuf/compiler/cpp/generator.cc",
+        "src/google/protobuf/compiler/cpp/helpers.cc",
+        "src/google/protobuf/compiler/cpp/map_field.cc",
+        "src/google/protobuf/compiler/cpp/message.cc",
+        "src/google/protobuf/compiler/cpp/message_field.cc",
+        "src/google/protobuf/compiler/cpp/padding_optimizer.cc",
+        "src/google/protobuf/compiler/cpp/parse_function_generator.cc",
+        "src/google/protobuf/compiler/cpp/primitive_field.cc",
+        "src/google/protobuf/compiler/cpp/service.cc",
+        "src/google/protobuf/compiler/cpp/string_field.cc",
         "src/google/protobuf/compiler/csharp/csharp_doc_comment.cc",
         "src/google/protobuf/compiler/csharp/csharp_enum.cc",
         "src/google/protobuf/compiler/csharp/csharp_enum_field.cc",
@@ -452,35 +451,35 @@ cc_library(
         "src/google/protobuf/compiler/csharp/csharp_repeated_primitive_field.cc",
         "src/google/protobuf/compiler/csharp/csharp_source_generator_base.cc",
         "src/google/protobuf/compiler/csharp/csharp_wrapper_field.cc",
-        "src/google/protobuf/compiler/java/java_context.cc",
-        "src/google/protobuf/compiler/java/java_doc_comment.cc",
-        "src/google/protobuf/compiler/java/java_enum.cc",
-        "src/google/protobuf/compiler/java/java_enum_field.cc",
-        "src/google/protobuf/compiler/java/java_enum_field_lite.cc",
-        "src/google/protobuf/compiler/java/java_enum_lite.cc",
-        "src/google/protobuf/compiler/java/java_extension.cc",
-        "src/google/protobuf/compiler/java/java_extension_lite.cc",
-        "src/google/protobuf/compiler/java/java_field.cc",
-        "src/google/protobuf/compiler/java/java_file.cc",
-        "src/google/protobuf/compiler/java/java_generator.cc",
-        "src/google/protobuf/compiler/java/java_generator_factory.cc",
-        "src/google/protobuf/compiler/java/java_helpers.cc",
-        "src/google/protobuf/compiler/java/java_kotlin_generator.cc",
-        "src/google/protobuf/compiler/java/java_map_field.cc",
-        "src/google/protobuf/compiler/java/java_map_field_lite.cc",
-        "src/google/protobuf/compiler/java/java_message.cc",
-        "src/google/protobuf/compiler/java/java_message_builder.cc",
-        "src/google/protobuf/compiler/java/java_message_builder_lite.cc",
-        "src/google/protobuf/compiler/java/java_message_field.cc",
-        "src/google/protobuf/compiler/java/java_message_field_lite.cc",
-        "src/google/protobuf/compiler/java/java_message_lite.cc",
-        "src/google/protobuf/compiler/java/java_name_resolver.cc",
-        "src/google/protobuf/compiler/java/java_primitive_field.cc",
-        "src/google/protobuf/compiler/java/java_primitive_field_lite.cc",
-        "src/google/protobuf/compiler/java/java_service.cc",
-        "src/google/protobuf/compiler/java/java_shared_code_generator.cc",
-        "src/google/protobuf/compiler/java/java_string_field.cc",
-        "src/google/protobuf/compiler/java/java_string_field_lite.cc",
+        "src/google/protobuf/compiler/java/context.cc",
+        "src/google/protobuf/compiler/java/doc_comment.cc",
+        "src/google/protobuf/compiler/java/enum.cc",
+        "src/google/protobuf/compiler/java/enum_field.cc",
+        "src/google/protobuf/compiler/java/enum_field_lite.cc",
+        "src/google/protobuf/compiler/java/enum_lite.cc",
+        "src/google/protobuf/compiler/java/extension.cc",
+        "src/google/protobuf/compiler/java/extension_lite.cc",
+        "src/google/protobuf/compiler/java/field.cc",
+        "src/google/protobuf/compiler/java/file.cc",
+        "src/google/protobuf/compiler/java/generator.cc",
+        "src/google/protobuf/compiler/java/generator_factory.cc",
+        "src/google/protobuf/compiler/java/helpers.cc",
+        "src/google/protobuf/compiler/java/kotlin_generator.cc",
+        "src/google/protobuf/compiler/java/map_field.cc",
+        "src/google/protobuf/compiler/java/map_field_lite.cc",
+        "src/google/protobuf/compiler/java/message.cc",
+        "src/google/protobuf/compiler/java/message_builder.cc",
+        "src/google/protobuf/compiler/java/message_builder_lite.cc",
+        "src/google/protobuf/compiler/java/message_field.cc",
+        "src/google/protobuf/compiler/java/message_field_lite.cc",
+        "src/google/protobuf/compiler/java/message_lite.cc",
+        "src/google/protobuf/compiler/java/name_resolver.cc",
+        "src/google/protobuf/compiler/java/primitive_field.cc",
+        "src/google/protobuf/compiler/java/primitive_field_lite.cc",
+        "src/google/protobuf/compiler/java/service.cc",
+        "src/google/protobuf/compiler/java/shared_code_generator.cc",
+        "src/google/protobuf/compiler/java/string_field.cc",
+        "src/google/protobuf/compiler/java/string_field_lite.cc",
         "src/google/protobuf/compiler/js/js_generator.cc",
         "src/google/protobuf/compiler/js/well_known_types_embed.cc",
         "src/google/protobuf/compiler/objectivec/objectivec_enum.cc",
@@ -498,7 +497,9 @@ cc_library(
         "src/google/protobuf/compiler/php/php_generator.cc",
         "src/google/protobuf/compiler/plugin.cc",
         "src/google/protobuf/compiler/plugin.pb.cc",
-        "src/google/protobuf/compiler/python/python_generator.cc",
+        "src/google/protobuf/compiler/python/generator.cc",
+        "src/google/protobuf/compiler/python/helpers.cc",
+        "src/google/protobuf/compiler/python/pyi_generator.cc",
         "src/google/protobuf/compiler/ruby/ruby_generator.cc",
         "src/google/protobuf/compiler/subprocess.cc",
         "src/google/protobuf/compiler/zip_writer.cc",
@@ -605,8 +606,8 @@ LITE_TEST_PROTOS = ["src/" + s for s in RELATIVE_LITE_TEST_PROTOS]
 RELATIVE_TEST_PROTOS = [
     # AUTOGEN(test_protos)
     "google/protobuf/any_test.proto",
-    "google/protobuf/compiler/cpp/cpp_test_bad_identifiers.proto",
-    "google/protobuf/compiler/cpp/cpp_test_large_enum_value.proto",
+    "google/protobuf/compiler/cpp/test_bad_identifiers.proto",
+    "google/protobuf/compiler/cpp/test_large_enum_value.proto",
     "google/protobuf/map_proto2_unittest.proto",
     "google/protobuf/map_unittest.proto",
     "google/protobuf/unittest.proto",
@@ -765,23 +766,24 @@ cc_test(
         "src/google/protobuf/any_test.cc",
         "src/google/protobuf/arena_unittest.cc",
         "src/google/protobuf/arenastring_unittest.cc",
+        "src/google/protobuf/arenaz_sampler_test.cc",
         "src/google/protobuf/compiler/annotation_test_util.cc",
         "src/google/protobuf/compiler/command_line_interface_unittest.cc",
-        "src/google/protobuf/compiler/cpp/cpp_bootstrap_unittest.cc",
-        "src/google/protobuf/compiler/cpp/cpp_move_unittest.cc",
-        "src/google/protobuf/compiler/cpp/cpp_plugin_unittest.cc",
-        "src/google/protobuf/compiler/cpp/cpp_unittest.cc",
-        "src/google/protobuf/compiler/cpp/cpp_unittest.inc",
+        "src/google/protobuf/compiler/cpp/bootstrap_unittest.cc",
         "src/google/protobuf/compiler/cpp/metadata_test.cc",
+        "src/google/protobuf/compiler/cpp/move_unittest.cc",
+        "src/google/protobuf/compiler/cpp/plugin_unittest.cc",
+        "src/google/protobuf/compiler/cpp/unittest.cc",
+        "src/google/protobuf/compiler/cpp/unittest.inc",
         "src/google/protobuf/compiler/csharp/csharp_bootstrap_unittest.cc",
         "src/google/protobuf/compiler/csharp/csharp_generator_unittest.cc",
         "src/google/protobuf/compiler/importer_unittest.cc",
-        "src/google/protobuf/compiler/java/java_doc_comment_unittest.cc",
-        "src/google/protobuf/compiler/java/java_plugin_unittest.cc",
+        "src/google/protobuf/compiler/java/doc_comment_unittest.cc",
+        "src/google/protobuf/compiler/java/plugin_unittest.cc",
         "src/google/protobuf/compiler/mock_code_generator.cc",
         "src/google/protobuf/compiler/objectivec/objectivec_helpers_unittest.cc",
         "src/google/protobuf/compiler/parser_unittest.cc",
-        "src/google/protobuf/compiler/python/python_plugin_unittest.cc",
+        "src/google/protobuf/compiler/python/plugin_unittest.cc",
         "src/google/protobuf/compiler/ruby/ruby_generator_unittest.cc",
         "src/google/protobuf/descriptor_database_unittest.cc",
         "src/google/protobuf/descriptor_unittest.cc",
@@ -789,6 +791,7 @@ cc_test(
         "src/google/protobuf/dynamic_message_unittest.cc",
         "src/google/protobuf/extension_set_unittest.cc",
         "src/google/protobuf/generated_message_reflection_unittest.cc",
+        "src/google/protobuf/generated_message_tctable_lite_test.cc",
         "src/google/protobuf/inlined_string_field_unittest.cc",
         "src/google/protobuf/io/coded_stream_unittest.cc",
         "src/google/protobuf/io/io_win32_unittest.cc",
@@ -889,6 +892,23 @@ internal_gen_well_known_protos_java(
     visibility = [
         "//java:__subpackages__",
     ],
+    deps = [proto + "_proto" for proto in LITE_WELL_KNOWN_PROTO_MAP.keys()],
+)
+
+internal_gen_kt_protos(
+    name = "gen_well_known_protos_kotlin",
+    visibility = [
+        "//java:__subpackages__",
+    ],
+    deps = [proto + "_proto" for proto in WELL_KNOWN_PROTO_MAP.keys()],
+)
+
+internal_gen_kt_protos(
+    name = "gen_well_known_protos_kotlinlite",
+    visibility = [
+        "//java:__subpackages__",
+    ],
+    lite = True,
     deps = [proto + "_proto" for proto in LITE_WELL_KNOWN_PROTO_MAP.keys()],
 )
 
@@ -1429,143 +1449,60 @@ filegroup(
 
 # Kotlin proto rules
 
-genrule(
-    name = "gen_kotlin_unittest_lite",
+proto_library(
+    name = "kt_unittest_lite",
     srcs = [
         "src/google/protobuf/unittest_lite.proto",
         "src/google/protobuf/unittest_import_lite.proto",
         "src/google/protobuf/unittest_import_public_lite.proto",
         "src/google/protobuf/map_lite_unittest.proto",
     ],
-    outs = [
-        "TestAllTypesLiteKt.kt",
-        "ForeignMessageLiteKt.kt",
-        "TestAllExtensionsLiteKt.kt",
-        "TestEmptyMessageLiteKt.kt",
-        "TestEmptyMessageWithExtensionsLiteKt.kt",
-        "TestMapLiteKt.kt",
-        "OptionalGroup_extension_liteKt.kt",
-        "RepeatedGroup_extension_liteKt.kt",
-    ],
-    visibility = ["//java:__subpackages__"],
-    cmd = "$(location //:protoc) " +
-          "--kotlin_out=lite:$(@D) -Isrc/ " +
-          "$(locations src/google/protobuf/unittest_lite.proto) && " +
-          "$(location //:protoc) " +
-          "--kotlin_out=lite:$(@D) -Isrc/ " +
-          "$(locations src/google/protobuf/map_lite_unittest.proto) && " +
-          "cp $(@D)/com/google/protobuf/TestAllTypesLiteKt.kt " +
-          "$(location TestAllTypesLiteKt.kt) && " +
-          "cp $(@D)/com/google/protobuf/ForeignMessageLiteKt.kt " +
-          "$(location ForeignMessageLiteKt.kt) && " +
-          "cp $(@D)/com/google/protobuf/TestAllExtensionsLiteKt.kt " +
-          "$(location TestAllExtensionsLiteKt.kt) && " +
-          "cp $(@D)/com/google/protobuf/TestAllTypesLiteKt.kt " +
-          "$(location TestAllTypesLiteKt.kt) && " +
-          "cp $(@D)/com/google/protobuf/TestEmptyMessageLiteKt.kt " +
-          "$(location TestEmptyMessageLiteKt.kt) && " +
-          "cp $(@D)/com/google/protobuf/TestEmptyMessageWithExtensionsLiteKt.kt " +
-          "$(location TestEmptyMessageWithExtensionsLiteKt.kt) && " +
-          "cp $(@D)/protobuf_unittest/TestMapLiteKt.kt " +
-          "$(location TestMapLiteKt.kt) && " +
-          "cp $(@D)/com/google/protobuf/OptionalGroup_extension_liteKt.kt " +
-          "$(location OptionalGroup_extension_liteKt.kt) && " +
-          "cp $(@D)/com/google/protobuf/RepeatedGroup_extension_liteKt.kt " +
-          "$(location RepeatedGroup_extension_liteKt.kt)",
-    tools = [":protoc"],
+    strip_import_prefix = "src",
 )
 
-genrule(
-    name = "gen_kotlin_unittest",
+internal_gen_kt_protos(
+    name = "gen_kotlin_unittest_lite",
+    deps = [":kt_unittest_lite"],
+    lite = True,
+    visibility = ["//java:__subpackages__"],
+)
+
+proto_library(
+    name = "kt_unittest",
     srcs = [
         "src/google/protobuf/unittest.proto",
         "src/google/protobuf/unittest_import.proto",
         "src/google/protobuf/unittest_import_public.proto",
         "src/google/protobuf/map_proto2_unittest.proto",
     ],
-    outs = [
-        "TestAllTypesKt.kt",
-        "ForeignMessageKt.kt",
-        "TestAllExtensionsKt.kt",
-        "TestEmptyMessageKt.kt",
-        "TestEmptyMessageWithExtensionsKt.kt",
-        "TestIntIntMapKt.kt",
-        "TestEnumMapKt.kt",
-        "TestMapsKt.kt",
-        "OptionalGroup_extensionKt.kt",
-        "RepeatedGroup_extensionKt.kt",
-    ],
-    visibility = ["//java:__subpackages__"],
-    cmd = "$(location //:protoc) " +
-          "--kotlin_out=shared,immutable:$(@D) -Isrc/ " +
-          "$(location src/google/protobuf/unittest.proto) && " +
-          "$(location //:protoc) " +
-          "--kotlin_out=shared,immutable:$(@D) -Isrc/ " + 
-          "$(location src/google/protobuf/map_proto2_unittest.proto) && " +
-          "cp $(@D)/protobuf_unittest/TestAllTypesKt.kt " +
-          "$(location TestAllTypesKt.kt) && " +
-          "cp $(@D)/protobuf_unittest/ForeignMessageKt.kt " +
-          "$(location ForeignMessageKt.kt) && " +
-          "cp $(@D)/protobuf_unittest/TestAllExtensionsKt.kt " +
-          "$(location TestAllExtensionsKt.kt) && " +
-          "cp $(@D)/protobuf_unittest/TestEmptyMessageKt.kt " +
-          "$(location TestEmptyMessageKt.kt) && " +
-          "cp $(@D)/protobuf_unittest/TestEmptyMessageWithExtensionsKt.kt " +
-          "$(location TestEmptyMessageWithExtensionsKt.kt) && " +
-          "cp $(@D)/protobuf_unittest/TestIntIntMapKt.kt " +
-          "$(location TestIntIntMapKt.kt) && " +
-          "cp $(@D)/protobuf_unittest/TestEnumMapKt.kt " +
-          "$(location TestEnumMapKt.kt) && " +
-          "cp $(@D)/protobuf_unittest/TestMapsKt.kt " +
-          "$(location TestMapsKt.kt) && " +
-          "cp $(@D)/protobuf_unittest/OptionalGroup_extensionKt.kt " +
-          "$(location OptionalGroup_extensionKt.kt) && " +
-          "cp $(@D)/protobuf_unittest/RepeatedGroup_extensionKt.kt " +
-          "$(location RepeatedGroup_extensionKt.kt)",
-    tools = ["//:protoc"],
+    strip_import_prefix = "src",
 )
 
-genrule(
-    name = "gen_kotlin_proto3_unittest_lite",
-    srcs = [
-        "src/google/protobuf/unittest_proto3_lite.proto",
-        "src/google/protobuf/unittest_import.proto",
-        "src/google/protobuf/unittest_import_public.proto",
-    ],
-    outs = [
-        "TestAllTypesProto3LiteKt.kt",
-        "TestEmptyMessageProto3LiteKt.kt",
-    ],
+internal_gen_kt_protos(
+    name = "gen_kotlin_unittest",
+    deps = [":kt_unittest"],
     visibility = ["//java:__subpackages__"],
-    cmd = "$(location //:protoc) " +
-          "--kotlin_out=lite:$(@D) -Isrc/ " +
-          "$(location src/google/protobuf/unittest_proto3_lite.proto) && " +
-          "cp $(@D)/proto3_lite_unittest/TestAllTypesKt.kt " +
-          "$(location TestAllTypesProto3LiteKt.kt) && " +
-          "cp $(@D)/proto3_lite_unittest/TestEmptyMessageKt.kt " +
-          "$(location TestEmptyMessageProto3LiteKt.kt)",
-    tools = ["//:protoc"],
 )
 
-genrule(
-    name = "gen_kotlin_proto3_unittest",
+proto_library(
+    name = "kt_proto3_unittest",
     srcs = [
         "src/google/protobuf/unittest_proto3.proto",
         "src/google/protobuf/unittest_import.proto",
         "src/google/protobuf/unittest_import_public.proto",
     ],
-    outs = [
-        "TestAllTypesProto3Kt.kt",
-        "TestEmptyMessageProto3Kt.kt",
-    ],
-    visibility = ["//java:__subpackages__"],
-    cmd = "$(location //:protoc) " +
-          "--kotlin_out=shared,immutable:$(@D) -Isrc/ " +
-          "$(location src/google/protobuf/unittest_proto3.proto) && " +
-          "cp $(@D)/proto3_unittest/TestAllTypesKt.kt " +
-          "$(location TestAllTypesProto3Kt.kt) && " +
-          "cp $(@D)/proto3_unittest/TestEmptyMessageKt.kt " +
-          "$(location TestEmptyMessageProto3Kt.kt)",
-    tools = ["//:protoc"],
+    strip_import_prefix = "src",
 )
 
+internal_gen_kt_protos(
+    name = "gen_kotlin_proto3_unittest_lite",
+    deps = [":kt_proto3_unittest"],
+    lite = True,
+    visibility = ["//java:__subpackages__"],
+)
+
+internal_gen_kt_protos(
+    name = "gen_kotlin_proto3_unittest",
+    deps = [":kt_proto3_unittest"],
+    visibility = ["//java:__subpackages__"],
+)

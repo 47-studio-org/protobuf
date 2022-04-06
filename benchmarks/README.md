@@ -4,8 +4,8 @@
 This directory contains benchmarking schemas and data sets that you
 can use to test a variety of performance scenarios against your
 protobuf language runtime. If you are looking for performance
-numbers of officially support languages, see [here](
-https://github.com/protocolbuffers/protobuf/blob/master/docs/performance.md)
+numbers of officially supported languages, see [Protobuf Performance](
+https://github.com/protocolbuffers/protobuf/blob/master/docs/performance.md).
 
 ## Prerequisite
 
@@ -68,18 +68,6 @@ The C# benchmark code is built as part of the main Google.Protobuf
 solution. It requires the .NET Core SDK, and depends on
 [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet), which
 will be downloaded automatically.
-
-### Big data
-
-There's some optional big testing data which is not included in the directory
-initially, you need to run the following command to download the testing data:
-
-```
-$ ./download_data.sh
-```
-
-After doing this the big data file will automatically generated in the
-benchmark directory.
 
 ## Run instructions
 
